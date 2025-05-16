@@ -1,4 +1,4 @@
-    //declaraçao das variaveis globais
+//declaraçao das variaveis globais
     let desempenho = 0;
     let tentativas = 0;
     let acertos = 0;
@@ -8,9 +8,6 @@
     const btnReiniciar = document.getElementById('reiniciar');
     const btnJogarNovamente = document.getElementById('joganovamente');
     const overlayJogarNovamente = document.getElementById('overlay-jogar-novamente');
-
-    // Inicia o botão reiniciar invisível
-    btnReiniciar.classList.add('invisivel');
 
     //funçao que zera os valores das variáveis controladoras
     function reiniciar() {
@@ -22,9 +19,20 @@
       atualizaPlacar(0, 0);
       //esconde o botao jogarnovamente alterando a classe css (className)
       overlayJogarNovamente.className = 'invisivel';
-      btnJogarNovamente.className = 'invisivel';
+      //btnJogarNovamente.className = 'invisivel';
       //oculta o botao reiniciar alterando a classe css (className)
       btnReiniciar.classList.add('invisivel');
+
+      // Remove todas as imagens de erro
+      document.querySelectorAll('#imagem-erro').forEach(function(img) {
+        img.remove();
+      });
+
+      // Remove a imagem do Smile, se existir
+      let imagem = document.getElementById("imagem");
+      if (imagem) {
+        imagem.remove();
+      }
     }
 
     //funçao jogar novamente
@@ -36,20 +44,25 @@
       for (i = 0; i < cartas.length; i++) {
         //e adicionames a classe inicial e col-4 para cada carta
         cartas.forEach(function(carta) {
-          carta.className = "inicial col-4";
+          carta.className = "inicial";
         });
       }
+
+      // Remove todas as imagens de erro
+      document.querySelectorAll('#imagem-erro').forEach(function(img) {
+        img.remove();
+      });
 
       //armazenamos a imagem do Smile na variável imagem (getElementById)
       let imagem = document.getElementById("imagem");
       //se a imagem nao for vazia (se ela existir)
-      if (imagem != "") {
+      if (imagem) {
         //removemos a imagem do Smile
         imagem.remove();
       }
       // Esconde o overlay ao clicar no botão
       overlayJogarNovamente.className = 'invisivel';
-      btnReiniciar.classList.add('invisivel'); // Esconde o botão reiniciar ao reiniciar o jogo
+      btnReiniciar.classList.add('visivel'); // Mostra o botão reiniciar ao reiniciar o jogo
     }
 
     //funçao que atualiza o placar
@@ -118,5 +131,5 @@
     }
 
 //adiciona eventos aos botões
-btnJogarNovamente.addEventListener('click', jogarNovamente);
-btnReiniciar.addEventListener('click', reiniciar);
+  btnJogarNovamente.addEventListener('click', jogarNovamente);
+  btnReiniciar.addEventListener('click', reiniciar);
