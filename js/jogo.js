@@ -19,7 +19,6 @@
       atualizaPlacar(0, 0);
       //esconde o botao jogarnovamente alterando a classe css (className)
       overlayJogarNovamente.className = 'invisivel';
-      //btnJogarNovamente.className = 'invisivel';
       //oculta o botao reiniciar alterando a classe css (className)
       btnReiniciar.classList.add('invisivel');
 
