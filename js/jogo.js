@@ -47,18 +47,11 @@
         });
       }
 
-      // Remove todas as imagens de erro
-      document.querySelectorAll('#imagem-erro').forEach(function(img) {
+      // Remove todas as imagens
+      document.querySelectorAll('#imagem').forEach(function(img) {
         img.remove();
       });
 
-      //armazenamos a imagem do Smile na variável imagem (getElementById)
-      let imagem = document.getElementById("imagem");
-      //se a imagem nao for vazia (se ela existir)
-      if (imagem) {
-        //removemos a imagem do Smile
-        imagem.remove();
-      }
       // Esconde o overlay ao clicar no botão
       overlayJogarNovamente.className = 'invisivel';
       btnReiniciar.classList.add('visivel'); // Mostra o botão reiniciar ao reiniciar o jogo
@@ -73,15 +66,21 @@
 
     }
 
-    //funçao executada quando o jogador acertou
-    function acertou(obj) {
-      //altera a classe CSS da <div> escolhida pelo jogador (className)
-      obj.className = "acertou";
+    //funçao para inserir imagem após o jogador clicar em uma carta 
+    function inserir_imagem(obj, status) {
       //Criar uma constante img que armazena um novo objeto imagem com largura de 100px
       const img = new Image(100);
       img.id = "imagem";
+      //altera a classe CSS da <div> escolhida pelo jogador (className)
+      if (status) {
+      obj.className = "acertou";
       //altera o atributo src (source) da imagem criada
       img.src = "https://upload.wikimedia.org/wikipedia/commons/2/2e/Oxygen480-emotes-face-smile-big.svg";
+      } else {
+      obj.className = "errou";
+      //altera o atributo src (source) da imagem criada
+      img.src = "./imagens/errou.png";
+      }
       //adiciona a imagem criada na div (obj) escolhida pelo jogador (appendChild)
       obj.appendChild(img);
     }
@@ -99,21 +98,18 @@
         //se o id da <div> escolhida pelo jogador for igual ao número sorteado
         if (obj.id == sorteado) {
           //chama a funçao acertou passando a div escolhida pelo jogador
-          acertou(obj);
+          inserir_imagem(obj, true);
           //incrementa o contador de acertos
           acertos++;
         } else {//se errou a tentativa
           //altera a classe da <div> escolhida pelo jogador para a classe errou
           obj.className = "errou";
           // Adiciona a imagem de erro na carta escolhida
-          const imgErro = new Image(100);
-          imgErro.src = "./imagens/errou.png";
-          imgErro.id = "imagem-erro";
-          obj.appendChild(imgErro);
+          inserir_imagem(obj, false)
           //armazena a div aonde Smile está escondido (getElementById)
           const objSorteado = document.getElementById(sorteado);
           //chama a funçao acertou para mostrar a div aonde está o Smile
-          acertou(objSorteado);
+          inserir_imagem(objSorteado, true);
         }
         //chama a funçao que atualiza o placar
         atualizaPlacar(acertos, tentativas);
